@@ -1,9 +1,12 @@
 const cron = require("node-cron");
 
-function startScheduler(client, message) {
-  cron.schedule("0 */2 * * *", () => {
-    console.log("Running a task every 2 hours");
-    // Here you can call your function to fetch tweets and send them to the Discord channel
-    // await fetchTweetsAndSendToDiscord();
-  });
+async function startScheduler(client, message) {
+  try {
+    cron.schedule("0 */2 * * *", () => {
+      const response = client.v2.tweet(text);
+      console.log("Tweeted successfully:", response.data.text);
+    });
+  } catch (error) {
+    console.error("Error scheduling tweet:", error);
+  }
 }

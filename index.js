@@ -1,6 +1,7 @@
 require("dotenv").config();
 import { TwitterClient } from "twitter-api-v2";
 import generateRandomTweet from "./generateRandomTweet.js";
+import { startScheduler } from "./scheduler.js";
 
 const client = new TwitterClient({
   appKey: process.env.TWITTER_API_KEY,
@@ -12,8 +13,7 @@ const client = new TwitterClient({
 const tweet = async () => {
   try {
     const text = generateRandomTweet();
-    const response = await client.v2.tweet(text);
-    console.log("Tweeted successfully:", response.data.text);
+    startScheduler(client, text);
   } catch (error) {
     console.error("Error tweeting:", error);
   }
