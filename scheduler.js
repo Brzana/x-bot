@@ -1,6 +1,6 @@
 const cron = require("node-cron");
 
-async function startScheduler(client, message) {
+async function startScheduler(client, text) {
   try {
     cron.schedule("0 */2 * * *", () => {
       const response = client.v2.tweet(text);
